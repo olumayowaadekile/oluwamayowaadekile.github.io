@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oluwamayowa Adekile | Data Analyst Portfolio</title>
+
+<!--
+  ============================================================
+  WELCOME! This whole website lives in ONE file: index.html
+  Everything — layout, styling (CSS) and interactivity (JS) —
+  is bundled in right here, so you can host it anywhere
+  (GitHub Pages, Netlify, a plain web server) with zero setup.
+
+  Look out for comments like this one throughout the file.
+  They mark every spot you're likely to want to edit:
+  your photo, your projects, your links, your text.
+  You do NOT need to know how to code to make these changes —
+  just find the comment, and edit the text or file path next to it.
+  ============================================================
+-->
+
+<!-- Google Fonts: Source Sans 3 (body/UI) + Source Serif 4 (headings) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome icon library (used for social + nav icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     Change the accent colour or fonts here and it updates the
+     whole site, because every other rule below refers back
+     to these variables instead of hard-coded colours.
+     ============================================================ */
+  :root{
+    --accent: #5e81ac;        /* <-- Your accent colour. Change this one line to re-theme the whole site. */
+    --accent-dark: #4c6a8f;
+    --ink: #2b2f36;           /* main text colour (near-black, not pure black) */
+    --ink-soft: #5b6270;      /* secondary/muted text */
+    --paper: #ffffff;         /* page background */
+    --paper-alt: #f7f8fa;     /* subtle alternate background for sections/cards */
+    --line: #e6e8ec;          /* hairline border colour */
+    --sidebar-w: 280px;       /* width of the fixed left sidebar on desktop */
+    --header-h: 64px;         /* height of the fixed top header bar */
+    --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4{
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+    margin: 0 0 0.5em;
+  }
+
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ color: var(--accent-dark); }
+  img{ max-width: 100%; display: block; }
+
+  /* Visible keyboard focus for accessibility */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  /* ============================================================
+     TOP HEADER BAR
+     Fixed strip across the top: site logo on the left,
+     social icons on the right. Sits above the sidebar on mobile.
+     ============================================================ */
+  #top-header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem 0 calc(var(--sidebar-w) + 2rem);
+    z-index: 200;
+  }
+  #top-header .logo{
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  #top-header .logo span{ color: var(--accent); }
+  #top-header .header-socials{
+    display: flex;
+    gap: 1.1rem;
+  }
+  #top-header .header-socials a{
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    transition: color 0.15s ease;
+  }
+  #top-header .header-socials a:hover{ color: var(--accent); }
+
+  /* ============================================================
+     LEFT SIDEBAR
+     Fixed for the full height of the viewport. Contains your
+     name, title, nav links and social icons pinned to the bottom.
+     ============================================================ */
+  #sidebar{
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--paper-alt);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.75rem 2.25rem 2rem;
+    z-index: 300;
+    overflow-y: auto;
+  }
+  #sidebar .identity .name{
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  #sidebar .identity .title{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  #sidebar nav{
+    margin-top: 2.75rem;
+  }
+  #sidebar nav ul{
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  #sidebar nav li + li{ margin-top: 0.35rem; }
+  #sidebar nav a{
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ink);
+    font-size: 0.98rem;
+    font-weight: 600;
+    padding: 0.55rem 0.6rem;
+    border-radius: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  #sidebar nav a i{
+    width: 18px;
+    text-align: center;
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+  #sidebar nav a:hover,
+  #sidebar nav a.active{
+    background: rgba(94,129,172,0.12);
+    color: var(--accent-dark);
+  }
+  #sidebar .sidebar-socials{
+    display: flex;
+    gap: 1.1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  #sidebar .sidebar-socials a{
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+  }
+  #sidebar .sidebar-socials a:hover{ color: var(--accent); }
+
+  /* Hamburger toggle button — only shown on small screens */
+  #sidebar-toggle{
+    display: none;
+    position: fixed;
+    top: 12px; left: 14px;
+    z-index: 400;
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 1.1rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  /* ============================================================
+     MAIN CONTENT AREA
+     Offset to the right of the sidebar and below the header.
+     ============================================================ */
+  #main{
+    margin-left: var(--sidebar-w);
+    padding-top: var(--header-h);
+  }
+
+  section{
+    padding: 5.5rem 4rem;
+    max-width: 1080px;
+  }
+  section + section{
+    border-top: 1px solid var(--line);
+  }
+
+  .eyebrow{
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ---------------- Banner / About section ---------------- */
+  .banner{
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+    padding-top: 6.5rem;
+  }
+  .banner .bio-col{ flex: 1 1 60%; }
+  .banner h1{
+    font-size: 2.1rem;
+    margin-bottom: 0.35rem;
+  }
+  .banner .role{
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .banner p{
+    color: var(--ink);
+    font-size: 1rem;
+    max-width: 62ch;
+  }
+  .banner .photo-col{
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  /*
+    PROFILE PHOTO — HOW TO ADD YOURS
+    1. Put your photo file inside the "images" folder next to this HTML file.
+    2. Rename the file to something simple, e.g. "profile.jpg".
+    3. Change the src="..." attribute just below from the placeholder
+       to "images/profile.jpg" (or whatever you named it).
+    The circular frame is done in CSS (border-radius: 50%), so any
+    square or landscape photo will automatically be cropped into a circle.
+  */
+  .banner .photo-frame{
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--line), 0 20px 40px -18px rgba(43,47,54,0.35);
+    background: var(--paper-alt);
+  }
+  .banner .photo-frame img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------------- Projects section ---------------- */
+  #projects h2{ font-size: 1.7rem; }
+  #projects .section-intro{
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin-bottom: 2.75rem;
+  }
+  .project-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+  @media (max-width: 900px){
+    .project-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px){
+    .project-grid{ grid-template-columns: 1fr; }
+  }
+  .project-card{
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .project-card:hover{
+    box-shadow: 0 16px 32px -20px rgba(43,47,54,0.35);
+    transform: translateY(-3px);
+  }
+  /*
+    PROJECT IMAGE — HOW TO SWAP THE PLACEHOLDER
+    Put a screenshot or thumbnail (e.g. a Power BI dashboard screenshot)
+    into the "images" folder, then change the src="..." below from the
+    placeholder URL to your local file, e.g. "images/project1.png".
+    Recommended size: roughly 600x400px (3:2 ratio) so cards line up neatly.
+  */
+  .project-card .thumb{
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background: var(--paper-alt);
+    overflow: hidden;
+  }
+  .project-card .thumb img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .project-card .card-body{
+    padding: 1.4rem 1.5rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  /* PROJECT TITLE — edit the text inside the <h3> tag in the card below */
+  .project-card h3{
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  /* PROJECT DESCRIPTION — edit the text inside the <p> tag in the card below */
+  .project-card p{
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+  /*
+    PROJECT LINK — point this to your live dashboard, GitHub repo,
+    PDF case study, or anything else. Just replace the "#" in the
+    href="#" attribute on the <a> button below with your real URL,
+    e.g. href="https://github.com/yourname/project-repo"
+  */
+  .btn-outline{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    align-self: flex-start;
+    padding: 0.55rem 1.1rem;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    color: var(--accent-dark);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .btn-outline:hover{
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ---------------- Contact section ---------------- */
+  #contact h2{ font-size: 1.7rem; }
+  .contact-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+    margin-top: 2.25rem;
+  }
+  @media (max-width: 700px){
+    .contact-grid{ grid-template-columns: 1fr; }
+  }
+  .contact-card{
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.5rem;
+    background: var(--paper-alt);
+  }
+  .contact-card i{
+    color: var(--accent);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .contact-card .label{
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+  .contact-card .value{
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  /* ---------------- Footer ---------------- */
+  footer{
+    padding: 2.25rem 4rem;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ============================================================
+     RESPONSIVE: collapse the sidebar into a slide-out drawer
+     on narrower screens (tablets and phones).
+     ============================================================ */
+  @media (max-width: 900px){
+    #top-header{ padding-left: 4rem; }
+    #sidebar-toggle{ display: flex; }
+    #sidebar{
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0,0,0,0.15);
+    }
+    #sidebar.open{ transform: translateX(0); }
+    #main{ margin-left: 0; }
+    section{ padding: 3.5rem 1.5rem; }
+    .banner{
+      flex-direction: column-reverse;
+      text-align: center;
+      padding-top: 5rem;
+    }
+    .banner .bio-col{ max-width: 100%; }
+    .banner p{ margin-left: auto; margin-right: auto; }
+    footer{ padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Small hamburger button, only visible on mobile, toggles the sidebar drawer open/closed -->
+<button id="sidebar-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+<!-- ============================================================
+     TOP HEADER BAR
+     Logo text on the left — change "Portfolio" to whatever you like.
+     Social icons on the right — edit the href="..." links to point
+     to your own profiles (same links as in the sidebar below).
+     ============================================================ -->
+<header id="top-header">
+  <div class="logo">Port<span>folio</span></div>
+  <div class="header-socials">
+    <!-- Change these href values to your own profile URLs -->
+    <a href="https://www.linkedin.com/in/oluwamayowaadekile/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="mailto:olumayowaadekile@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+  </div>
+</header>
+
+<!-- ============================================================
+     LEFT SIDEBAR
+     Edit your name and job title here. The nav links below
+     already point to the #about, #projects and #contact sections
+     further down the page — you shouldn't need to change those
+     unless you rename a section's id.
+     ============================================================ -->
+<aside id="sidebar">
+  <div>
+    <div class="identity">
+      <!-- YOUR NAME -->
+      <div class="name">Oluwamayowa Adekile</div>
+      <!-- YOUR JOB TITLE / TAGLINE -->
+      <div class="title">Data Analyst skilled in Power BI, SQL &amp; Advanced Excel | Operations &amp; Supply Chain Analytics</div>
+    </div>
+
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#about" class="nav-link"><i class="fa-solid fa-user"></i>About</a></li>
+        <li><a href="#projects" class="nav-link"><i class="fa-solid fa-chart-column"></i>Projects</a></li>
+        <li><a href="#contact" class="nav-link"><i class="fa-solid fa-envelope-open-text"></i>Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Social icons pinned to the bottom of the sidebar — edit hrefs to your own profiles -->
+  <div class="sidebar-socials">
+    <a href="https://www.linkedin.com/in/oluwamayowaadekile/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="mailto:olumayowaadekile@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+  </div>
+</aside>
+
+<div id="main">
+
+  <!-- ============================================================
+       BANNER / ABOUT SECTION
+       Bio text is on the left, circular photo on the right.
+       Edit the paragraph text directly below to update your bio.
+       See the PROFILE PHOTO comment above (in the CSS) for how
+       to swap in your real photo.
+       ============================================================ -->
+  <section id="about" class="banner">
+    <div class="bio-col">
+      <div class="eyebrow">About</div>
+      <h1>Oluwamayowa Adekile</h1>
+      <div class="role">Data Analyst skilled in Power BI, SQL &amp; Advanced Excel | Operations &amp; Supply Chain Analytics</div>
+      <!-- YOUR BIO — edit this paragraph freely -->
+      <p>
+        I am a Data Analyst with an MSc in Logistics, Data Analytics &amp; Supply Chain
+        Management and hands-on experience developing end-to-end business intelligence
+        solutions across healthcare, logistics and financial services. I specialise in
+        using SQL, Power BI, Power Query, DAX and Advanced Excel to transform raw data
+        into meaningful insights, build interactive dashboards, and support data-driven
+        decision-making. My background in supply chain and operations management enables
+        me to combine technical expertise with practical business knowledge to solve
+        operational challenges and improve performance. I am open to Data Analyst,
+        Business Intelligence Analyst, Healthcare Data Analyst and Supply Chain Analyst
+        roles, as well as freelance projects and consulting opportunities involving data
+        cleaning, dashboard development, reporting and business analytics.
+      </p>
+    </div>
+    <div class="photo-col">
+      <!--
+        PROFILE PHOTO placeholder. To use your own photo:
+        1. Save your photo into the "images" folder as, e.g. images/profile.jpg
+        2. Replace the src below with "images/profile.jpg"
+        A free placeholder service is used for now so the page looks
+        complete out of the box — swap it out whenever you're ready.
+      -->
+      <div class="photo-frame">
+        <img src="https://placehold.co/440x440/e9edf3/5e81ac?text=Your+Photo" alt="Portrait of Oluwamayowa Adekile">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS SECTION
+       A responsive 3-column grid of project cards. One demo card
+       is included below — copy/paste its whole <article> block to
+       add more projects (instructions are inside the comment below).
+       ============================================================ -->
+  <section id="projects">
+    <div class="eyebrow">Portfolio</div>
+    <h2>Projects</h2>
+    <p class="section-intro">
+      A selection of dashboards, data models and analytical work.
+      Replace this demo project with your own — see the comments
+      in the code for exactly what to change.
+    </p>
+
+    <div class="project-grid">
+
+      <!--
+        ============================================================
+        DEMO PROJECT CARD — copy this whole <article>...</article>
+        block (from the opening <article class="project-card"> tag
+        to its matching closing </article> tag) and paste it again
+        just below to add a second, third, etc. project. Each copy
+        is one card in the grid — the grid will automatically wrap
+        cards onto new rows as you add more.
+
+        For each card, change FOUR things:
+          1. The image src (see "PROJECT IMAGE" note in the CSS above)
+          2. The title inside <h3>...</h3>
+          3. The description inside <p>...</p>
+          4. The href="#" on the "View Project" button
+        ============================================================
+      -->
+      <article class="project-card">
+        <div class="thumb">
+          <!-- 1. PROJECT IMAGE: replace this src with your own screenshot, e.g. images/project1.png -->
+          <img src="https://placehold.co/600x400/eef1f6/5e81ac?text=Dashboard+Preview" alt="Preview of a sample Power BI dashboard">
+        </div>
+        <div class="card-body">
+          <!-- 2. PROJECT TITLE -->
+          <h3>Supply Chain Performance Dashboard</h3>
+          <!-- 3. PROJECT DESCRIPTION -->
+          <p>
+            An interactive Power BI dashboard tracking supplier lead times,
+            inventory turnover and on-time-in-full delivery rates, built with
+            DAX measures and a Power Query ETL pipeline on top of raw ERP data.
+          </p>
+          <!-- 4. PROJECT LINK: replace "#" with your live dashboard, GitHub repo or case-study URL -->
+          <a href="#" class="btn-outline" target="_blank" rel="noopener">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </article>
+
+      <!-- Paste a copy of the <article class="project-card">...</article> block here for Project 2 -->
+
+      <!-- Paste a copy of the <article class="project-card">...</article> block here for Project 3 -->
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT SECTION
+       Email, LinkedIn and location. Edit the values below —
+       each contact-card holds one piece of contact info.
+       ============================================================ -->
+  <section id="contact">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Contact</h2>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <i class="fa-solid fa-envelope"></i>
+        <div class="label">Email</div>
+        <!-- YOUR EMAIL -->
+        <div class="value"><a href="mailto:olumayowaadekile@gmail.com">olumayowaadekile@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <i class="fa-brands fa-linkedin"></i>
+        <div class="label">LinkedIn</div>
+        <!-- YOUR LINKEDIN URL -->
+        <div class="value"><a href="https://www.linkedin.com/in/oluwamayowaadekile/" target="_blank" rel="noopener">linkedin.com/in/oluwamayowaadekile</a></div>
+      </div>
+      <div class="contact-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="label">Location</div>
+        <!-- YOUR LOCATION -->
+        <div class="value">Bradford, United Kingdom</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       The year updates itself automatically via the small script
+       at the bottom of the page — you don't need to edit that.
+       Just change the name text if needed.
+       ============================================================ -->
+  <footer>
+    <div>&copy; <span id="year"></span> Oluwamayowa Adekile. All rights reserved.</div>
+    <div>Built with HTML, CSS &amp; JavaScript.</div>
+  </footer>
+
+</div>
+
+<script>
+  // Auto-fill the current year in the footer copyright line.
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile sidebar toggle: clicking the hamburger button
+  // slides the sidebar in and out on small screens.
+  var toggleBtn = document.getElementById('sidebar-toggle');
+  var sidebar = document.getElementById('sidebar');
+  toggleBtn.addEventListener('click', function () {
+    var isOpen = sidebar.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close the mobile sidebar automatically after tapping a nav link,
+  // so the chosen section is visible right away.
+  document.querySelectorAll('.nav-link').forEach(function (link) {
+    link.addEventListener('click', function () {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Highlight the current section's nav link while scrolling.
+  var sections = ['about', 'projects', 'contact'].map(function (id) {
+    return document.getElementById(id);
+  });
+  var navLinks = document.querySelectorAll('.nav-link');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(function (s) { if (s) observer.observe(s); });
+</script>
+
+</body>
+</html>
